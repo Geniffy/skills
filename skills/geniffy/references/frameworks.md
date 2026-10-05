@@ -14,6 +14,7 @@ LangChain, LlamaIndex and the OpenAI Agents SDK, the page opens with a package t
 | Framework | What the page builds | Page |
 | --- | --- | --- |
 | Agno | Give an Agno agent a memory of each of your users, through dynamic instructions or a recall tool, with the user from the run. | https://docs.geniffy.com/integrations/agno.md |
+| Amazon S3 | Keep the documents under a prefix of an S3 bucket in a memory, such as a company's policies. A file whose ETag hasn't changed isn't downloaded again, a changed one teaches only what changed, and a file that is gone is deleted with what it taught. | https://docs.geniffy.com/integrations/s3.md |
 | Anthropic | Give Claude a memory of each of your users with the Anthropic SDK. What is known goes in the system prompt, and each exchange is saved after the reply. | https://docs.geniffy.com/integrations/anthropic.md |
 | AutoGen | Give an AutoGen agent a memory of each of your users through AutoGen's own Memory interface, with what is known put in its model context before each reply and each exchange saved after it. | https://docs.geniffy.com/integrations/autogen.md |
 | Bolna | Give a Bolna voice agent a memory of each caller, from your own server. What matters about the caller goes into the agent's prompt before a call starts, on calls in and out, and each call is saved when it ends. | https://docs.geniffy.com/integrations/bolna.md |
