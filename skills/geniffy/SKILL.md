@@ -25,7 +25,8 @@ Do these in order, keep the change small, and match the project's own style.
    once and use only that below: `mem = client.space(f"user_{user_id}")` /
    ``const mem = client.space(`user_${userId}`)``. A space exists from its first write. Never call memory
    methods on the unbound client for an end user's data: that writes to the account owner's own memory,
-   with every user mixed together.
+   with every user mixed together. `space()` refuses a blank or missing id, so where a request can arrive
+   without a signed-in user, skip memory for it rather than binding.
 4. **Save what is worth remembering.** After a user tells the app something about themselves, their work
    or their plans: `mem.memories.add(text)`. A whole conversation, as the framework already holds it:
    `mem.memories.add(messages=history)` / `mem.memories.add({ messages: history })`. Files (PDF, Word
@@ -59,9 +60,17 @@ source first: `mem.sources.wait(source.id)`.
 ## Frameworks
 
 Every framework integration is the same two calls: `context()` before the model, `memories.add()` after.
-For Vercel AI SDK, LangChain, LangGraph, the OpenAI Agents SDK, Pydantic AI, LlamaIndex, CrewAI, Agno,
-Mastra, Google ADK, Microsoft Agent Framework, Pipecat, the Anthropic, OpenAI and Gemini SDKs, n8n,
-Zapier and Make, see [references/frameworks.md](references/frameworks.md): each has a tested page.
+Three frameworks have a package that makes both; when the project already uses one of them, use it:
+
+| Framework | Install | The change |
+| --- | --- | --- |
+| Vercel AI SDK | `npm install geniffy-ai-sdk` | ``model: withGeniffy(model, { space: `user_${userId}` })`` |
+| LangChain | `pip install langchain-geniffy` | `middleware=[GeniffyMemory(space=lambda runtime: f"user_{runtime.context.id}")]` |
+| LlamaIndex | `pip install llama-index-memory-geniffy` | `GeniffyMemoryBlock(space=f"user_{user_id}")` in `Memory.from_defaults(memory_blocks=[block])`, then `await block.remember(message, reply)` after `agent.run` |
+
+For LangGraph, the OpenAI Agents SDK, Pydantic AI, CrewAI, Agno, Mastra, Google ADK, Microsoft Agent
+Framework, Pipecat, the Anthropic, OpenAI and Gemini SDKs, n8n, Zapier and Make, and for the three above
+without their package, see [references/frameworks.md](references/frameworks.md): each has a tested page.
 
 ## References
 

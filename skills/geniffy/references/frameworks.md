@@ -7,7 +7,9 @@ Every integration is the same two calls, put where the framework runs code aroun
 - **After the reply:** `memories.add(messages=...)` with the turn as the framework holds it (OpenAI,
   Anthropic, Gemini and Vercel AI SDK message shapes are read as they are).
 
-Each page below is tested end to end. Fetch the `.md` address for the exact code.
+Each page below is tested end to end. Fetch the `.md` address for the exact code. For the Vercel AI SDK,
+LangChain and LlamaIndex, the page opens with a package that makes both calls: `geniffy-ai-sdk`,
+`langchain-geniffy` and `llama-index-memory-geniffy`.
 
 | Framework | What the page builds | Page |
 | --- | --- | --- |
