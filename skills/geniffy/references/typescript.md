@@ -64,7 +64,9 @@ await mem.memories.addMany([{ text: "..." }, { url: "https://..." }]);
 Messages from OpenAI, Anthropic, Gemini and the Vercel AI SDK type-check as they are. A file or page
 that cannot be read rejects with `UnreadableError`; `error.source` is the source it left, with the
 reason. Syncing the app's own records? Pass `externalId` with the record's id: sending it again updates
-that source and learns only what changed, and `mem.sources.delete({ externalId })` removes it.
+that source and learns only what changed, and `mem.sources.delete({ externalId })` removes it. To sort
+what one user's memory holds, add with `labels: { channel: "email" }` and pass `{ labels }` to `context`,
+`ask`, `search`, `memories.list` or `brief` to keep to them; labels never replace spaces.
 
 ## Read and correct
 

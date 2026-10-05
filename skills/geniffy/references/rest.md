@@ -25,11 +25,12 @@ app or device.
 
 | Call | What it does |
 | --- | --- |
-| `POST /v1/memories` with `{"text": ...}`, `{"url": ...}` or `{"messages": [...]}` | Save a note, a web page, or a conversation as the framework holds it (`title` optional; `external_id` to update the same record later). Returns `201` with `source` |
+| `POST /v1/memories` with `{"text": ...}`, `{"url": ...}` or `{"messages": [...]}` | Save a note, a web page, or a conversation as the framework holds it (`title` optional; `external_id` to update the same record later; `labels`, such as `{"channel": "email"}`, to filter recall by). Returns `201` with `source` |
 | `POST /v1/memories/file` (multipart, field `file`) | Save a PDF or Word (.docx) file |
 | `POST /v1/context` with `{"question": ...}` | `context`: put it above the user's message, as it is. Never empty; `empty: true` when nothing bears on the question |
 | `POST /v1/ask` with `{"question": ...}` | An answer from memory only, or `answer: null` with a message saying why |
 | `POST /v1/search` with `{"q": ..., "limit": 5}` | `memories`: the best matches, ranked, without judging relevance |
+| `labels` on context, ask and search (`label=name:value` on a GET) | Keep to what sources carrying those labels said: every name must match, a list of values is any one of them |
 | `GET /v1/sources/{id}` | Whether learning from a source has finished |
 | `DELETE /v1/spaces/{space}` | Forget everything held for one end user |
 

@@ -63,6 +63,10 @@ A file or page that cannot be read raises `UnreadableError`; `error.source` is t
 the reason. Syncing the app's own records (tickets, documents, a conversation that grows)? Pass
 `external_id=` with the record's id: sending it again updates that source and learns only what changed,
 and `mem.sources.delete(external_id=...)` removes it. See [Add memories](https://docs.geniffy.com/add-memories).
+To sort what one user's memory holds (a channel, an account, a project), add with `labels={"channel": "email"}`
+and pass the same `labels=` to `context`, `ask`, `search`, `memories.list` or `brief` to keep to them; every
+name must match and a list of values is any one of them. Labels never replace spaces: a user is a space.
+See [Labels](https://docs.geniffy.com/add-memories/labels).
 
 ## Read and correct
 
