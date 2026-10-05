@@ -48,6 +48,9 @@ await client.spaces();                                // which spaces hold anyth
 await client.forgetSpace("user_8841");                // everything held for that user, gone, when they ask
 ```
 
+A blank space, `undefined` or `null` throws. For a user's own app or device, make a key limited to them
+instead of shipping your key: ``await client.space(`user_${user.id}`).keys.create({ name: "Their phone" })``.
+
 ## Add
 
 ```ts
@@ -60,7 +63,8 @@ await mem.memories.addMany([{ text: "..." }, { url: "https://..." }]);
 
 Messages from OpenAI, Anthropic, Gemini and the Vercel AI SDK type-check as they are. A file or page
 that cannot be read rejects with `UnreadableError`; `error.source` is the source it left, with the
-reason.
+reason. Syncing the app's own records? Pass `externalId` with the record's id: sending it again updates
+that source and learns only what changed, and `mem.sources.delete({ externalId })` removes it.
 
 ## Read and correct
 

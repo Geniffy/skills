@@ -44,7 +44,9 @@ client.spaces()                          # which spaces hold anything, most rece
 client.forget_space("user_8841")         # everything held for that user, gone, when they ask
 ```
 
-A space exists from the first time you write to it; there is nothing to create. See
+A space exists from the first time you write to it; there is nothing to create. A blank space or `None`
+raises. For a user's own app or device, make a key limited to them instead of shipping your key:
+`client.space(f"user_{user.id}").keys.create(name="Their phone")` (`.key` is shown once). See
 [Keys and spaces](https://docs.geniffy.com/keys-and-spaces).
 
 ## Add
@@ -58,7 +60,9 @@ mem.memories.add_many([{"text": "..."}, {"url": "https://..."}])
 ```
 
 A file or page that cannot be read raises `UnreadableError`; `error.source` is the source it left, with
-the reason. See [Add memories](https://docs.geniffy.com/add-memories).
+the reason. Syncing the app's own records (tickets, documents, a conversation that grows)? Pass
+`external_id=` with the record's id: sending it again updates that source and learns only what changed,
+and `mem.sources.delete(external_id=...)` removes it. See [Add memories](https://docs.geniffy.com/add-memories).
 
 ## Read and correct
 

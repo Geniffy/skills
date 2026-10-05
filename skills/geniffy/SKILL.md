@@ -81,7 +81,8 @@ without their package, see [references/frameworks.md](references/frameworks.md):
 
 ## Never
 
-- Put the key in client-side code, a repository, or a log line.
+- Put the key in client-side code, a repository, or a log line. A user's own app gets a key limited to
+  that user (`client.space(id).keys.create()`), never yours.
 - Write an end user's data without a space, or reuse one user's space for another.
 - Add a fallback when `context()` says nothing is known: pass its sentence through.
 - Save passwords, API keys or other secrets as memories.
