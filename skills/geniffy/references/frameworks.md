@@ -36,6 +36,7 @@ LangChain, LlamaIndex and the OpenAI Agents SDK, the page opens with a package t
 | Strands Agents | Give a Strands agent a memory of each of your users, with one hook provider that puts what is known in its system prompt before each request and saves the exchange after it. | https://docs.geniffy.com/integrations/strands.md |
 | Vapi | Give a Vapi phone assistant a memory of each caller, from your own server URL. What matters about the caller goes into its prompt when a call starts, it can look things up mid-call, and the call is saved when it ends. | https://docs.geniffy.com/integrations/vapi.md |
 | Vercel AI SDK | A streaming chat route that remembers each of your users, for any model the AI SDK supports. Nothing changes in the browser. | https://docs.geniffy.com/integrations/vercel-ai-sdk.md |
+| WhatsApp | Give an assistant on WhatsApp a memory of each person who messages it, on the WhatsApp Business Cloud API. What is known about them goes in front of the model before each reply, and each exchange is saved. | https://docs.geniffy.com/integrations/whatsapp.md |
 | Zapier | Remember what arrives in your Zaps, from forms, email and CRMs, and ask your memory from any Zap, with Webhooks by Zapier. | https://docs.geniffy.com/integrations/zapier.md |
 
 For a framework not listed, follow the pattern on https://docs.geniffy.com/integrations.md (any framework).
