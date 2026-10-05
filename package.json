@@ -1,0 +1,10 @@
+{
+  "name": "geniffy-skills",
+  "private": true,
+  "description": "Agent Skills for building with Geniffy.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/skills.test.mjs"
+  }
+}
