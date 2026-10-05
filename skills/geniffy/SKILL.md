@@ -69,8 +69,8 @@ Four frameworks have a package that makes both; when the project already uses on
 | LlamaIndex | `pip install llama-index-memory-geniffy` | `GeniffyMemoryBlock(space=f"user_{user_id}")` in `Memory.from_defaults(memory_blocks=[block])`, then `await block.remember(message, reply)` after `agent.run` |
 | OpenAI Agents SDK | `pip install openai-agents-geniffy` | `Runner.run(..., context=user, run_config=memory.run_config())` with `memory = GeniffyMemory(space=lambda u: f"user_{u.id}")`, then `await memory.remember(user, message, result)` |
 
-For LangGraph, Pydantic AI, CrewAI, Agno, Mastra, Google ADK, Microsoft Agent Framework, Pipecat, the
-Anthropic, OpenAI and Gemini SDKs, n8n, Zapier and Make, and for the four above without their package, see
+For LangGraph, Pydantic AI, CrewAI, Agno, Mastra, Google ADK, Microsoft Agent Framework, LiveKit, Pipecat,
+the Anthropic, OpenAI and Gemini SDKs, n8n, Zapier and Make, and for the four above without their package, see
 [references/frameworks.md](references/frameworks.md): each has a tested page.
 
 ## References

@@ -20,6 +20,7 @@ LangChain, LlamaIndex and the OpenAI Agents SDK, the page opens with a package t
 | Google ADK | Give an Agent Development Kit agent a memory of each of your users, with Geniffy as the runner's memory service, used by ADK's own memory tools. | https://docs.geniffy.com/integrations/google-adk.md |
 | LangChain | Give a LangChain agent a memory of each of your users, with two small pieces of middleware, or with a recall tool the agent calls. | https://docs.geniffy.com/integrations/langchain.md |
 | LangGraph | Give a LangGraph graph a memory of each of your users, with a node that recalls before the model and a node that remembers after it. | https://docs.geniffy.com/integrations/langgraph.md |
+| LiveKit | Give a LiveKit voice agent a memory of each caller, with what is known put in front of the LLM before every reply and each exchange saved once the agent has answered. | https://docs.geniffy.com/integrations/livekit.md |
 | LlamaIndex | Give a LlamaIndex agent a memory of each of your users, with a memory block that recalls what is known, or a recall tool the agent calls. | https://docs.geniffy.com/integrations/llamaindex.md |
 | Make | Remember and recall from any Make scenario with the HTTP app's Make a request module, with your key kept in a keychain. | https://docs.geniffy.com/integrations/make.md |
 | Mastra | Give a Mastra agent a memory of each of your users, through dynamic instructions or a recall tool, with the user in the runtime context. | https://docs.geniffy.com/integrations/mastra.md |
