@@ -8,8 +8,8 @@ Every integration is the same two calls, put where the framework runs code aroun
   Anthropic, Gemini and Vercel AI SDK message shapes are read as they are).
 
 Each page below is tested end to end. Fetch the `.md` address for the exact code. For the Vercel AI SDK,
-LangChain and LlamaIndex, the page opens with a package that makes both calls: `geniffy-ai-sdk`,
-`langchain-geniffy` and `llama-index-memory-geniffy`.
+LangChain, LlamaIndex and the OpenAI Agents SDK, the page opens with a package that makes both calls:
+`geniffy-ai-sdk`, `langchain-geniffy`, `llama-index-memory-geniffy` and `openai-agents-geniffy`.
 
 | Framework | What the page builds | Page |
 | --- | --- | --- |

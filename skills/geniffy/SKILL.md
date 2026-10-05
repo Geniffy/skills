@@ -60,17 +60,18 @@ source first: `mem.sources.wait(source.id)`.
 ## Frameworks
 
 Every framework integration is the same two calls: `context()` before the model, `memories.add()` after.
-Three frameworks have a package that makes both; when the project already uses one of them, use it:
+Four frameworks have a package that makes both; when the project already uses one of them, use it:
 
 | Framework | Install | The change |
 | --- | --- | --- |
 | Vercel AI SDK | `npm install geniffy-ai-sdk` | ``model: withGeniffy(model, { space: `user_${userId}` })`` |
 | LangChain | `pip install langchain-geniffy` | `middleware=[GeniffyMemory(space=lambda runtime: f"user_{runtime.context.id}")]` |
 | LlamaIndex | `pip install llama-index-memory-geniffy` | `GeniffyMemoryBlock(space=f"user_{user_id}")` in `Memory.from_defaults(memory_blocks=[block])`, then `await block.remember(message, reply)` after `agent.run` |
+| OpenAI Agents SDK | `pip install openai-agents-geniffy` | `Runner.run(..., context=user, run_config=memory.run_config())` with `memory = GeniffyMemory(space=lambda u: f"user_{u.id}")`, then `await memory.remember(user, message, result)` |
 
-For LangGraph, the OpenAI Agents SDK, Pydantic AI, CrewAI, Agno, Mastra, Google ADK, Microsoft Agent
-Framework, Pipecat, the Anthropic, OpenAI and Gemini SDKs, n8n, Zapier and Make, and for the three above
-without their package, see [references/frameworks.md](references/frameworks.md): each has a tested page.
+For LangGraph, Pydantic AI, CrewAI, Agno, Mastra, Google ADK, Microsoft Agent Framework, Pipecat, the
+Anthropic, OpenAI and Gemini SDKs, n8n, Zapier and Make, and for the four above without their package, see
+[references/frameworks.md](references/frameworks.md): each has a tested page.
 
 ## References
 
