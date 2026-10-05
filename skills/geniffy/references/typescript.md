@@ -68,7 +68,7 @@ that source and learns only what changed, and `mem.sources.delete({ externalId }
 what one user's memory holds, add with `labels: { channel: "email" }` and pass `{ labels }` to `context`,
 `ask`, `search`, `memories.list` or `brief` to keep to them; labels never replace spaces.
 `mem.sources.deleteLabelled({ channel: "gmail" })` deletes everything added under a label, such as a data
-source the user disconnected.
+source the user disconnected; with `{ keep: seen }` at the end of a full sync, only what the source no longer has.
 
 ## Read and correct
 
