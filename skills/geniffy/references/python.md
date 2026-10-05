@@ -55,7 +55,7 @@ raises. For a user's own app or device, make a key limited to them instead of sh
 mem.memories.add("A note to remember", title="Call with Priya")
 mem.memories.add(url="https://example.com")                     # a web page, read once
 mem.memories.add(messages=chat_history)                         # a conversation, as your framework holds it
-mem.memories.add_file("Pricing.pdf")                            # PDF or Word (.docx): a path, bytes or a file opened "rb"
+mem.memories.add_file("Pricing.pdf")                            # PDF, .docx, .pptx, .xlsx or text: a path, bytes or a file opened "rb"
 mem.memories.add_many([{"text": "..."}, {"url": "https://..."}])
 ```
 

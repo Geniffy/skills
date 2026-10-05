@@ -57,7 +57,7 @@ instead of shipping your key: ``await client.space(`user_${user.id}`).keys.creat
 await mem.memories.add({ text: "Pilots run for 6 weeks.", title: "GTM plan" });
 await mem.memories.add({ url: "https://example.com" });             // a web page, read once
 await mem.memories.add({ messages: chatHistory });                  // a conversation, as your framework holds it
-await mem.memories.addFile(fileOrBlob, { filename: "Pricing.pdf" }); // PDF or Word (.docx)
+await mem.memories.addFile(fileOrBlob, { filename: "Pricing.pdf" }); // PDF, .docx, .pptx, .xlsx or text
 await mem.memories.addMany([{ text: "..." }, { url: "https://..." }]);
 ```
 
