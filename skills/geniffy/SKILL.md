@@ -70,7 +70,7 @@ Four frameworks have a package that makes both; when the project already uses on
 | OpenAI Agents SDK | `pip install openai-agents-geniffy` | `Runner.run(..., context=user, run_config=memory.run_config())` with `memory = GeniffyMemory(space=lambda u: f"user_{u.id}")`, then `await memory.remember(user, message, result)` |
 
 For LangGraph, Pydantic AI, AutoGen, CrewAI, Agno, Mastra, Google ADK, Microsoft Agent Framework, Strands Agents, Haystack,
-LiveKit, Pipecat, Vapi, Retell, Bolna, WhatsApp, Telegram, Slack, Twilio, the Anthropic, OpenAI and Gemini SDKs, n8n, Zapier and Make, and for the four above without their package, see
+LiveKit, Pipecat, Vapi, Retell, Bolna, WhatsApp, Telegram, Slack, Twilio, a Notion sync, the Anthropic, OpenAI and Gemini SDKs, n8n, Zapier and Make, and for the four above without their package, see
 [references/frameworks.md](references/frameworks.md): each has a tested page.
 
 ## References
