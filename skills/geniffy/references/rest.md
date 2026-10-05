@@ -31,6 +31,7 @@ app or device.
 | `POST /v1/ask` with `{"question": ...}` | An answer from memory only, or `answer: null` with a message saying why |
 | `POST /v1/search` with `{"q": ..., "limit": 5}` | `memories`: the best matches, ranked, without judging relevance |
 | `labels` on context, ask and search (`label=name:value` on a GET) | Keep to what sources carrying those labels said: every name must match, a list of values is any one of them |
+| `DELETE /v1/sources?label=channel:gmail` | Delete every source carrying the labels, with what only they taught; up to 100 a call, `more: true` says call again |
 | `GET /v1/sources/{id}` | Whether learning from a source has finished |
 | `DELETE /v1/spaces/{space}` | Forget everything held for one end user |
 

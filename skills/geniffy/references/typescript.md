@@ -67,6 +67,8 @@ reason. Syncing the app's own records? Pass `externalId` with the record's id: s
 that source and learns only what changed, and `mem.sources.delete({ externalId })` removes it. To sort
 what one user's memory holds, add with `labels: { channel: "email" }` and pass `{ labels }` to `context`,
 `ask`, `search`, `memories.list` or `brief` to keep to them; labels never replace spaces.
+`mem.sources.deleteLabelled({ channel: "gmail" })` deletes everything added under a label, such as a data
+source the user disconnected.
 
 ## Read and correct
 

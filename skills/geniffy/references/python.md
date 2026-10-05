@@ -66,6 +66,8 @@ and `mem.sources.delete(external_id=...)` removes it. See [Add memories](https:/
 To sort what one user's memory holds (a channel, an account, a project), add with `labels={"channel": "email"}`
 and pass the same `labels=` to `context`, `ask`, `search`, `memories.list` or `brief` to keep to them; every
 name must match and a list of values is any one of them. Labels never replace spaces: a user is a space.
+When a user disconnects a data source, `mem.sources.delete_labelled({"channel": "gmail"})` deletes everything
+added under that label, with what only it taught.
 See [Labels](https://docs.geniffy.com/add-memories/labels).
 
 ## Read and correct
