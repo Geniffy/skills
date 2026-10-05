@@ -33,6 +33,7 @@ app or device.
 | `labels` on context, ask and search (`label=name:value` on a GET) | Keep to what sources carrying those labels said: every name must match, a list of values is any one of them |
 | `DELETE /v1/sources?label=channel:gmail` | Delete every source carrying the labels, with what only they taught; up to 100 a call, `more: true` says call again |
 | `GET /v1/sources/{id}` | Whether learning from a source has finished |
+| `GET /v1/export` (with the user's space) | Everything held for one end user, as their own copy |
 | `DELETE /v1/spaces/{space}` | Forget everything held for one end user |
 
 ## Responses and errors
