@@ -48,6 +48,7 @@ LangChain, LlamaIndex and the OpenAI Agents SDK, the page opens with a package t
 | Vercel AI SDK | A streaming chat route that remembers each of your users, for any model the AI SDK supports. Nothing changes in the browser. | https://docs.geniffy.com/integrations/vercel-ai-sdk.md |
 | Website | Keep a website in a memory of its own, from its sitemap. A page that changed is read again and teaches only what changed, a page no longer listed is deleted with what it taught, and your assistant recalls from the site beside each user's own memory. | https://docs.geniffy.com/integrations/website.md |
 | WhatsApp | Give an assistant on WhatsApp a memory of each person who messages it, on the WhatsApp Business Cloud API. What is known about them goes in front of the model before each reply, and each exchange is saved. | https://docs.geniffy.com/integrations/whatsapp.md |
+| Zendesk | Give each of your customers a memory of their support history. Every ticket goes into its requester's own memory with each public reply, internal notes stay out, and after the first run only the tickets that changed are read. | https://docs.geniffy.com/integrations/zendesk.md |
 | Zapier | Remember what arrives in your Zaps, from forms, email and CRMs, and ask your memory from any Zap, with Webhooks by Zapier. | https://docs.geniffy.com/integrations/zapier.md |
 
 For a framework not listed, follow the pattern on https://docs.geniffy.com/integrations.md (any framework).
