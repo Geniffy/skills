@@ -1,13 +1,15 @@
 ---
 name: geniffy
-description: Add long-term memory to an app or AI agent with Geniffy (Python and TypeScript SDKs named geniffy, or the REST API). Use when the user wants their app to remember each of its users across sessions, asks to integrate Geniffy, or the code uses GENIFFY_API_KEY, client.space(), context(), ask() or memories.add().
+description: Add long-term memory to an app or AI agent with Geniffy (Python and TypeScript SDKs named geniffy, or the REST API). Use when the user wants their app or agent to remember each of its users across sessions, asks to integrate Geniffy, or the code uses GENIFFY_API_KEY, client.space(), context(), ask(), briefing(), session() or memories.add().
 ---
 
 # Building with Geniffy
 
 Geniffy gives an app a memory of each of its users. The app saves what a user says, and before its model
 answers, it asks Geniffy what is known that bears on the question. Every memory keeps the sentence it came
-from, and when nothing is known, Geniffy says so in words instead of returning nothing.
+from, and when nothing is known, Geniffy says so in words instead of returning nothing. An agent opens each
+session with a briefing (where things stand, what is due, the rules that apply, what happened) and saves every
+turn, tool calls included, into one memory for the session.
 
 Docs: https://docs.geniffy.com (every page has a Markdown copy: add `.md` to its address).
 
@@ -29,16 +31,22 @@ Do these in order, keep the change small, and match the project's own style.
    without a signed-in user, skip memory for it rather than binding.
 4. **Save what is worth remembering.** After a user tells the app something about themselves, their work
    or their plans: `mem.memories.add(text)`. A whole conversation, as the framework already holds it:
-   `mem.memories.add(messages=history)` / `mem.memories.add({ messages: history })`. Files (PDF, Word
-   .docx): `add_file` / `addFile`. Web pages: `add(url=...)` / `add({ url })`.
+   `mem.memories.add(messages=history)` / `mem.memories.add({ messages: history })`. An agent or a chat that
+   keeps going saves every turn into one memory for the session, tool calls and results included: make
+   `run = mem.session(session_id)` once, then call `run.save(messages)` with the whole conversation after each
+   turn; only what is new is sent. Files (PDF, Word .docx): `add_file` / `addFile`. Web pages: `add(url=...)` /
+   `add({ url })`.
 5. **Recall before the model answers.** Put `mem.context(question)` above the user's message in the prompt,
    as it is. It is never empty: when nothing is known it returns a sentence telling the model to say so,
    so add no fallback of your own. For a direct answer instead, `mem.ask(question)`; when its `answer` is
-   null, say nothing is known.
+   null, say nothing is known. An agent opens each session, and each new task, with
+   `mem.briefing(project=..., cue=task)` in its system prompt instead: where things stand, what is due, the
+   rules that apply, what happened, then the memories that bear on the task.
 6. **Let users be forgotten.** Wherever the app deletes a user or their data, also call
    `client.forget_space(f"user_{user_id}")` / ``client.forgetSpace(`user_${userId}`)``.
-7. **Handle errors.** Catch `AuthenticationError` (a wrong or revoked key) and `UnreadableError` (a file or
-   page that could not be read; `error.source.error` says why). The SDKs already retry busy and network
+7. **Handle errors.** Catch `AuthenticationError` (a wrong or revoked key), `UnreadableError` (a file or
+   page that could not be read; `error.source.error` says why) and `UsageLimitError` on saves (this month's
+   use is up; search and recall keep working, so let the reply go on). The SDKs already retry busy and network
    errors, and never save a note twice. Log the request id of any failed call (`error.request_id` /
    `error.requestId`): it finds the call on the Requests page of the Geniffy app.
 8. **One small test** that writes a note to a test space, waits with `mem.sources.wait(id)`, checks
@@ -49,6 +57,8 @@ Do these in order, keep the change small, and match the project's own style.
 | The app needs | Use |
 | --- | --- |
 | Memory in its own prompt (most apps) | `context(question)` |
+| An agent's start of a session or a new task: where things stand, what is due, the rules, what happened | `briefing(project=..., cue=task)` |
+| An agent's or a chat's turns, saved as they go into one memory | `session(session_id).save(messages)` |
 | An answer in words, or a plain "nothing known" | `ask(question)` |
 | The memories themselves, ranked, to filter or show | `search(query, limit=...)` (it ranks, it does not judge relevance) |
 | What is lastingly true about a person, and what is going on now | `profile(name)` |
@@ -60,14 +70,15 @@ source first: `mem.sources.wait(source.id)`.
 ## Frameworks
 
 Every framework integration is the same two calls: `context()` before the model, `memories.add()` after.
-Four frameworks have a package that makes both; when the project already uses one of them, use it:
+Four frameworks have a package that does more, opening with the briefing and saving each run whole, tool calls
+included, into one memory for the conversation; when the project already uses one of them, use it:
 
 | Framework | Install | The change |
 | --- | --- | --- |
-| Vercel AI SDK | `npm install geniffy-ai-sdk` | ``model: withGeniffy(model, { space: `user_${userId}` })`` |
-| LangChain | `pip install langchain-geniffy` | `middleware=[GeniffyMemory(space=lambda runtime: f"user_{runtime.context.id}")]` |
-| LlamaIndex | `pip install llama-index-memory-geniffy` | `GeniffyMemoryBlock(space=f"user_{user_id}")` in `Memory.from_defaults(memory_blocks=[block])`, then `await block.remember(message, reply)` after `agent.run` |
-| OpenAI Agents SDK | `pip install openai-agents-geniffy` | `Runner.run(..., context=user, run_config=memory.run_config())` with `memory = GeniffyMemory(space=lambda u: f"user_{u.id}")`, then `await memory.remember(user, message, result)` |
+| Vercel AI SDK | `npm install geniffy-ai-sdk` | ``model: withGeniffy(model, { space: `user_${userId}`, session: chatId })`` |
+| LangChain | `pip install langchain-geniffy` | `middleware=[GeniffyMemory(space=lambda runtime: f"user_{runtime.context.id}")]` with a checkpointer, run with `{"configurable": {"thread_id": chat_id}}` |
+| LlamaIndex | `pip install llama-index-memory-geniffy` | `GeniffyMemoryBlock(space=f"user_{user_id}")` in `Memory.from_defaults(session_id=chat_id, memory_blocks=[block])`, then `await block.save(memory)` after `agent.run` |
+| OpenAI Agents SDK | `pip install openai-agents-geniffy` | `Runner.run(..., context=user, run_config=memory.run_config())` with `memory = GeniffyMemory(space=lambda u: f"user_{u.id}")`, then `await memory.save(user, result, session=chat_id)` |
 
 For LangGraph, Pydantic AI, AutoGen, CrewAI, Agno, Mastra, Google ADK, Microsoft Agent Framework, Strands Agents, Haystack,
 LiveKit, Pipecat, Vapi, Retell, Bolna, WhatsApp, Telegram, Slack, Twilio, Amazon S3, Confluence, GitHub, Gmail, Google Calendar, Google Drive, Linear, Notion, OneDrive, website and Zendesk syncs, the Anthropic, OpenAI and Gemini SDKs, n8n, Zapier and Make, and for the four above without their package, see

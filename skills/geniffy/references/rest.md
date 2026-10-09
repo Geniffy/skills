@@ -25,7 +25,9 @@ app or device.
 
 | Call | What it does |
 | --- | --- |
-| `POST /v1/memories` with `{"text": ...}`, `{"url": ...}` or `{"messages": [...]}` | Save a note, a web page, or a conversation as the framework holds it (`title` optional; `external_id` to update the same record later; `labels`, such as `{"channel": "email"}`, to filter recall by). Returns `201` with `source` |
+| `POST /v1/memories` with `{"text": ...}`, `{"url": ...}` or `{"messages": [...]}` | Save a note, a web page, or a conversation as the framework holds it, tool calls and results included (`title` optional; `external_id` to update the same record later; `labels`, such as `{"channel": "email"}`, to filter recall by). Returns `201` with `source` |
+| `POST /v1/memories` with `{"messages": [...], "session": "<your id>"}` | An agent's or a chat's next turns: each call adds its messages to one memory for the whole session, so send only what is new since the last call |
+| `POST /v1/briefing` with `{"project": ..., "cue": ...}` | `briefing`: put it in an agent's system prompt at the start of a session or a task. Where things stand, what is due, the rules that apply, what happened, then the memories, each dated |
 | `POST /v1/memories/file` (multipart, field `file`) | Save a file: PDF, Word `.docx`, PowerPoint `.pptx`, Excel `.xlsx`, or text (`.txt`, `.md`, `.csv`, `.html`) |
 | `POST /v1/context` with `{"question": ...}` | `context`: put it above the user's message, as it is. Never empty; `empty: true` when nothing bears on the question |
 | `POST /v1/ask` with `{"question": ...}` | An answer from memory only, or `answer: null` with a message saying why |
@@ -41,4 +43,6 @@ app or device.
 JSON. Every response carries an `X-Request-ID` header: log it for any failed call, as it finds the call on
 the Requests page of the Geniffy app. An error carries a code to branch on and a sentence written for a
 person: https://docs.geniffy.com/errors.md. Retry `408`, `429` and `5xx` with backoff; retry a write only
-when it never reached the API, or on `429`, so a note is never saved twice.
+when it never reached the API, or on `429`, so a note is never saved twice. Never retry `402`
+(`allowance_used`): this month's use is up, saving resumes when the month resets (`GET /v1/usage` says when),
+and search and recall keep working.

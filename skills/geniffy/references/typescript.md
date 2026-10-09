@@ -39,6 +39,21 @@ await mem.search("renewal", { limit: 5 });            // the memories, ranked, t
 `context()` and `ask()` judge whether anything bears on the question. `search()` ranks and does not
 judge. See [Recall](https://docs.geniffy.com/recall).
 
+## Agents: open with the briefing, save every turn
+
+```ts
+const system = await mem.briefing({ project: "checkout", cue: task });   // where things stand, what is due, the
+                                                                         // rules that apply, what happened, then
+                                                                         // the memories, each dated
+const run = mem.session(runId, { title: "Refund agent", labels: { project: "checkout" } });
+await run.save(messages);                                                // after every turn: only what is new is sent
+```
+
+`briefingFull()` has the briefing's parts, and each can be read on its own: `now()`, `episodes()`, `lessons()` and
+`intentions()`; `setIntention(id, "done")` marks a promise kept. `save()` sends only the messages after the last
+one it sent, 500 a call, into one memory for the whole session, tool calls and results included. See
+[The briefing](https://docs.geniffy.com/recall/briefing).
+
 ## Spaces: one memory per user
 
 ```ts
@@ -87,8 +102,9 @@ await mem.sources.delete(source.id);                     // a source, and what o
 ## Errors, retries and request ids
 
 Every error carries the API's own sentence: `AuthenticationError` (a wrong or revoked key),
-`NotFoundError`, `BadRequestError`, `UnreadableError`, `RateLimitError`, `InternalServerError` and
-`APIConnectionError`; all extend `GeniffyError`. Reads are retried twice on network errors, 408, 429 and
+`NotFoundError`, `BadRequestError`, `UnreadableError`, `RateLimitError`, `UsageLimitError` (this month's use is
+up: saving resumes when the month resets, `client.usage()` says when; search and recall keep working; never
+retried), `InternalServerError` and `APIConnectionError`; all extend `GeniffyError`. Reads are retried twice on network errors, 408, 429 and
 5xx; adding is retried only on 429, so a retry never saves a note twice. Pass `{ maxRetries, timeout }`
 to the constructor to change that.
 

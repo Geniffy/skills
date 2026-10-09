@@ -8,7 +8,8 @@ Every integration is the same two calls, put where the framework runs code aroun
   Anthropic, Gemini and Vercel AI SDK message shapes are read as they are).
 
 Each page below is tested end to end. Fetch the `.md` address for the exact code. For the Vercel AI SDK,
-LangChain, LlamaIndex and the OpenAI Agents SDK, the page opens with a package that makes both calls:
+LangChain, LlamaIndex and the OpenAI Agents SDK, the page opens with a package that does more: it opens with the
+briefing and saves each run whole, tool calls included, into one memory for the conversation:
 `geniffy-ai-sdk`, `langchain-geniffy`, `llama-index-memory-geniffy` and `openai-agents-geniffy`.
 
 | Framework | What the page builds | Page |
@@ -28,7 +29,7 @@ LangChain, LlamaIndex and the OpenAI Agents SDK, the page opens with a package t
 | Google Drive | Keep each user's Google Drive in their memory with their own Google sign-in. After the first run only what changed is fetched; a changed file teaches only what changed, a file that is gone takes what it taught with it, and disconnecting forgets everything from Drive. | https://docs.geniffy.com/integrations/google-drive.md |
 | Haystack | Give a Haystack pipeline or agent a memory of each of your users, with a component that recalls what is known before the model answers, or a recall tool the agent calls. | https://docs.geniffy.com/integrations/haystack.md |
 | Linear | Keep a Linear team's issues in a memory of their own, so an assistant knows what was decided and why. Each issue is one source with its comments; after the first run only the issues updated since are read, and an issue in the trash is deleted from memory. | https://docs.geniffy.com/integrations/linear.md |
-| LangChain | Give a LangChain agent a memory of each of your users, with two small pieces of middleware, or with a recall tool the agent calls. | https://docs.geniffy.com/integrations/langchain.md |
+| LangChain | Give a LangChain agent a memory of each of your users, with one piece of middleware from the package, with two of your own, or with a recall tool the agent calls. | https://docs.geniffy.com/integrations/langchain.md |
 | LangGraph | Give a LangGraph graph a memory of each of your users, with a node that recalls before the model and a node that remembers after it. | https://docs.geniffy.com/integrations/langgraph.md |
 | LiveKit | Give a LiveKit voice agent a memory of each caller, with what is known put in front of the LLM before every reply and each exchange saved once the agent has answered. | https://docs.geniffy.com/integrations/livekit.md |
 | LlamaIndex | Give a LlamaIndex agent a memory of each of your users, with a memory block that recalls what is known, or a recall tool the agent calls. | https://docs.geniffy.com/integrations/llamaindex.md |

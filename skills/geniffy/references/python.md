@@ -35,6 +35,20 @@ mem.search("renewal", limit=5)           # the memories, ranked, to do with as y
 judge: it returns its best matches for any question at all. `context_full()` returns the block with the
 memories behind it and an `empty` flag. See [Recall](https://docs.geniffy.com/recall).
 
+## Agents: open with the briefing, save every turn
+
+```python
+system = mem.briefing(project="checkout", cue=task)   # where things stand, what is due, the rules that apply,
+                                                      # what happened, then the memories, each dated
+run = mem.session(run_id, title="Refund agent", labels={"project": "checkout"})
+run.save(messages)                                    # after every turn: only what is new is sent
+```
+
+`briefing_full()` has the briefing's parts, and each can be read on its own: `now()`, `episodes()`, `lessons()`
+and `intentions()`; `set_intention(id, "done")` marks a promise kept. `save()` sends only the messages after the
+last one it sent, 500 a call, into one memory for the whole session, tool calls and results included. See
+[The briefing](https://docs.geniffy.com/recall/briefing).
+
 ## Spaces: one memory per user
 
 ```python
@@ -102,8 +116,9 @@ Every call above has an awaited twin on `AsyncGeniffy`.
 ## Errors, retries and request ids
 
 Every error carries the API's own sentence: `AuthenticationError` (a wrong or revoked key),
-`NotFoundError`, `BadRequestError`, `UnreadableError`, `RateLimitError`, `InternalServerError` and
-`APIConnectionError`, all subclasses of `GeniffyError`. Reads are retried twice on network errors, 408,
+`NotFoundError`, `BadRequestError`, `UnreadableError`, `RateLimitError`, `UsageLimitError` (this month's use is
+up: saving resumes when the month resets, `client.usage()` says when; search and recall keep working; never
+retried), `InternalServerError` and `APIConnectionError`, all subclasses of `GeniffyError`. Reads are retried twice on network errors, 408,
 429 and 5xx. Adding is retried only when the request never reached Geniffy, or on 429, so a retry never
 saves a note twice. Set `max_retries=` and `timeout=` on the client to change that.
 
